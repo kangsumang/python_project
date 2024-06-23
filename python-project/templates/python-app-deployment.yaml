@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-project
+  template:
+    metadata:
+      labels:
+        app: python-project
+    spec:
+      containers:
+      - name: python-project
+        image: kangsumang/python_project:latest
+        ports:
+        - containerPort: 4004
+        env:
+        - name: DB_NAME
+          value: "example_db"
+        - name: DB_USER
+          value: "example_user"
+        - name: DB_PASS
+          value: "example_password"
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: DB_PORT
+          value: "5432"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-project-service
+spec:
+  type: ClusterIP
+  selector:
+    app: python-project
+  ports:
+  - port: 80
+    targetPort: 4004
+
