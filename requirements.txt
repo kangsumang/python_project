@@ -1,5 +1,4 @@
 # requirements.txt
 Flask
-psycopg2
 psycopg2-binary
-
+python-dotenv
